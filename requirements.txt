@@ -1,0 +1,11 @@
+polars
+python-dotenv
+duckdb
+dbt-core
+dbt-duckdb
+sqlalchemy
+boto3
+pyarrow
+pandas
+numpy
+requests
