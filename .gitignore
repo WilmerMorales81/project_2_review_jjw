@@ -206,8 +206,12 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
-#data/
+# Raw data files (DO NOT COMMIT)
+   data/raw/*.csv
+   data/raw/*.xlsx
+   data/raw/*.zip
 
-data/raw/*.csv
-data/raw/*.xlsx
-data/raw/*.zip
+# Raw data files (DO NOT COMMIT)
+   data/raw/*.csv
+   data/raw/*.xlsx
+   data/raw/*.zip
