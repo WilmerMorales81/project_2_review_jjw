@@ -4,8 +4,8 @@ from pathlib import Path
 Path("logs").mkdir(exist_ok=True)
 
 
-def get_logger(name: str = "basic_logger") -> loggin.logger:
-    logger = logging.getlogger(name)
+def get_logger(name: str = "basic_logger") -> logging.Logger:
+    logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)
 
     if not logger.handlers:
@@ -27,6 +27,6 @@ def get_logger(name: str = "basic_logger") -> loggin.logger:
         file_handler.setFormatter(file_format)
 
         logger.addHandler(console_handler)
-        logger.addhandler(file_handler)
+        logger.addHandler(file_handler)
 
     return logger

@@ -1,0 +1,105 @@
+version: 2
+
+models:
+  - name: mart_providers_by_state
+    description: "Provider counts by state"
+
+    columns:
+      - name: state
+        tests:
+          - unique
+          - not_null
+
+      - name: total_providers
+        tests:
+          - not_null
+
+      - name: individual_providers
+        tests:
+          - not_null
+
+      - name: organization_providers
+        tests:
+          - not_null
+
+      - name: pct_individual
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 100
+
+  - name: mart_providers_by_county
+    description: "Provider counts by county"
+
+    columns:
+      - name: state
+        tests:
+          - not_null
+
+      - name: county_fips
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_zip_county')
+              field: county_fips
+
+      - name: total_providers
+        tests:
+          - not_null
+
+  - name: mart_provider_directory
+    description: "Enriched provider directory"
+
+    columns:
+      - name: provider_id
+        tests:
+          - not_null
+
+      - name: state
+        tests:
+          - not_null
+
+  - name: mart_providers_by_geography
+    description: "Providers by state and county"
+
+    columns:
+      - name: state
+        tests:
+          - not_null
+
+      - name: county_fips
+        tests:
+          - not_null
+
+      - name: total_providers
+        tests:
+          - not_null
+
+  - name: mart_specialty_distribution
+    description: "Healthcare specialties by state"
+
+    columns:
+      - name: state
+        tests:
+          - not_null
+
+      - name: specialty_classification
+        tests:
+          - not_null
+
+      - name: provider_count
+        tests:
+          - not_null
+
+  - name: mart_provider_summary
+    description: "Overall dataset summary"
+
+    columns:
+      - name: total_providers
+        tests:
+          - not_null
+
+      - name: total_states
+        tests:
+          - not_null

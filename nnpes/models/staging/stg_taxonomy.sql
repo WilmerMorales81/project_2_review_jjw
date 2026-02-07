@@ -1,28 +1,27 @@
 -- models/staging/stg_taxonomy.sql
--- Author: JING 
--- Purpose: [Staging] Staging model for NPPES Taxonomy data
--- Source: data/processed/nppes_cleaned.parquet
--- Status: 🚧 Framework only - TODO: implement logic
+-- Healthcare provider taxonomy codes (specialties)
 
 {{
   config(
     materialized='view',
-    tags=['staging', 'nppes']
+    tags=['staging', 'reference']
   )
 }}
 
--- TODO: Implement CTE structure
--- WITH source AS (
---     SELECT * FROM ...
--- ),
---
--- cleaned AS (
---     SELECT
---         -- TODO: Add columns
---     FROM source
--- )
---
--- SELECT * FROM cleaned
+WITH source AS (
+    SELECT *
+    FROM read_csv('../data/raw/nucc_taxonomy_250.csv')
+),
 
--- Placeholder for now
-SELECT 'TODO: Implement staging logic' as status
+cleaned AS (
+    SELECT
+        "Code"::VARCHAR AS taxonomy_code,
+        "Classification"::VARCHAR AS classification,
+        "Specialization"::VARCHAR AS specialization,
+        "Display Name"::VARCHAR AS display_name,
+        CURRENT_TIMESTAMP AS loaded_at
+    FROM source
+    WHERE "Code" IS NOT NULL
+)
+
+SELECT * FROM cleaned
