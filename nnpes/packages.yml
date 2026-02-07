@@ -1,0 +1,5 @@
+# packages.yml - dbt packages (like Python requirements.txt)
+
+packages:
+  - package: dbt-labs/dbt_utils
+    version: 1.1.1

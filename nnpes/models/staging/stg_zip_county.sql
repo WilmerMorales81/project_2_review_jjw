@@ -1,28 +1,25 @@
 -- models/staging/stg_zip_county.sql
--- Author: JING 
--- Purpose: [Staging] Staging model for NPPES Zip County data
--- Source: data/processed/nppes_cleaned.parquet
--- Status: 🚧 Framework only - TODO: implement logic
+-- ZIP to county mapping
 
 {{
   config(
     materialized='view',
-    tags=['staging', 'nppes']
+    tags=['staging', 'geographic']
   )
 }}
+WITH source AS (
+    SELECT *
+    FROM read_parquet('../data/cleaned/zip_county.parquet')
+),
 
--- TODO: Implement CTE structure
--- WITH source AS (
---     SELECT * FROM ...
--- ),
---
--- cleaned AS (
---     SELECT
---         -- TODO: Add columns
---     FROM source
--- )
---
--- SELECT * FROM cleaned
+cleaned AS (
+    SELECT
+        zip_code,
+        county_fips,
+        CURRENT_TIMESTAMP AS loaded_at
+    FROM source
+    WHERE zip_code IS NOT NULL
+      AND county_fips IS NOT NULL
+)
 
--- Placeholder for now
-SELECT 'TODO: Implement staging logic' as status
+SELECT * FROM cleaned

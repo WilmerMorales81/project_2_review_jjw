@@ -1,5 +1,5 @@
--- models/staging/stg_census.sql
--- County demographic and geographic info
+-- models/staging/stg_fips.sql
+-- State and county FIPS codes with names
 
 {{
   config(
@@ -15,10 +15,10 @@ WITH source AS (
 
 cleaned AS (
     SELECT
+        state::VARCHAR AS state_code,
+        state_name::VARCHAR AS state_name,
         fipscounty::VARCHAR AS county_fips,
         countyname_fips::VARCHAR AS county_name,
-        state::VARCHAR AS state_abbr,
-        state_name::VARCHAR AS state_name,
         CURRENT_TIMESTAMP AS loaded_at
     FROM source
     WHERE fipscounty IS NOT NULL

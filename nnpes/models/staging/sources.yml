@@ -1,0 +1,48 @@
+version: 2
+
+sources:
+  - name: raw_data
+    description: "Raw data files"
+
+    tables:
+      - name: nppes_providers
+        description: "Healthcare providers from NPPES"
+        external_location: "read_parquet('data/cleaned/nppes_cleaned.parquet')"
+
+        columns:
+          - name: NPI
+          - name: entity_type
+          - name: organization_name
+          - name: last_name
+          - name: first_name
+          - name: state
+          - name: zip_code
+          - name: taxonomy_code
+
+      - name: zip_county
+        description: "ZIP to county mapping"
+        external_location: "read_parquet('data/cleaned/zip_county.parquet')"
+
+        columns:
+          - name: zip_code
+          - name: county_fips
+
+      - name: taxonomy
+        description: "Healthcare provider taxonomy codes"
+        external_location: "read_csv('data/raw/nucc_taxonomy_250.csv')"
+
+        columns:
+          - name: Code
+          - name: Classification
+          - name: Specialization
+          - name: Display Name
+
+      - name: county_info
+        description: "County FIPS codes and names"
+        external_location: "read_csv('data/raw/ssa_fips_state_county_2025.csv')"
+
+        columns:
+          - name: fipscounty
+          - name: countyname_fips
+          - name: state
+          - name: state_name
