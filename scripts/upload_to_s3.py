@@ -4,8 +4,8 @@
 import boto3
 import os
 
-# TODO: Change this to your actual bucket name
-S3_BUCKET = "your-bucket-name"
+# S3 bucket name
+S3_BUCKET = "de-october-individual-folders"
 
 print("=" * 60)
 print("UPLOADING TO S3")
