@@ -61,7 +61,7 @@ def write_parquet_to_s3(
     with open(tmp_path, "rb") as f:
         s3.upload_fileobj(f, bucket, s3_key)
 
-# Clean up the temp file
+# Clean up the temp file, prevent clutter/leaks
     os.remove(tmp_path)
 
     return f"s3://{bucket}/{s3_key}"
@@ -87,6 +87,7 @@ def write_clean_parquet_to_s3(
         df.write_parquet(tmp.name)
         tmp_path = tmp.name
 
+# rstrip('/') removes trailing slashes from key, for consitent output path e.g.(nppes/clean/clean_data.parquet instead of nppes/clean//clean_data.parquet)
     s3_key = f"{key.rstrip('/')}/clean_data.parquet"
 
     with open(tmp_path, "rb") as f:
@@ -95,6 +96,8 @@ def write_clean_parquet_to_s3(
     os.remove(tmp_path)
 
     return f"s3://{bucket}/{s3_key}"
+
+# creates a Polars LazyFrame that points to Parquet files in S3 without loading them unitl, collect() is called
 
 
 def scan_parquet_from_s3(
@@ -107,6 +110,7 @@ def scan_parquet_from_s3(
     """
 
     session = boto3.Session(profile_name=profile)
+  # get_frozen_credentials() stores the credential, to prevent credential rotation/expiration
     creds = session.get_credentials().get_frozen_credentials()
 
     storage_options = {
@@ -116,6 +120,7 @@ def scan_parquet_from_s3(
         "region": session.region_name,
     }
 
+# rstrip('/') removes trailing slashes from key, for consitent output path e.g.(nppes/raw/*.parquet instead of nppes/raw//*.parquet)
     s3_path = f"s3://{bucket}/{key.rstrip('/')}/*.parquet"
 
     return pl.scan_parquet(
