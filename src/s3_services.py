@@ -10,6 +10,8 @@ from pathlib import Path
 
 logger = ml.get_logger()
 
+# Conditional S3 session creation, defaults to standard session if no profile is provided
+
 
 def get_s3_session(profile_name: str = None):
     if profile_name:
@@ -18,21 +20,31 @@ def get_s3_session(profile_name: str = None):
         session = boto3.Session()
     return session.client('s3')
 
+# Reads CSV file in S3, into a Polars DataFrame, with optional schema inference limit
+
 
 def read_csv_from_s3(bucket_name: str, key: str, profile_name: str = None, infer_schema_length: int = 10000):
     s3 = get_s3_session(profile_name)
     response = s3.get_object(Bucket=bucket_name, Key=key)
+
+    # Read the CSV into memory, [.decode("utf-8")] converts bytes into string
     csv_content = response["Body"].read().decode("utf-8")
+    # StringIO(csv_content) turns the string into a file-like object
+    # infer_schema_length limits the number of rows
     df = pl.read_csv(StringIO(csv_content),
                      infer_schema_length=infer_schema_length)
     logger.info(f"Read {df.height} records from {key}")
     return df
 
+# Uploads a CSV file to AWS s3 bucket
+
 
 def upload_csv_to_s3(file_name: str, bucket_name: str, key: str, profile_name: str = None):
-    BASE_DIR = Path(__file__).resolve().parent
-    file_path = BASE_DIR / file_name
+    # Path(),turns the string path into a Path object from pathlib
+    file_path = Path(file_name)
     s3 = get_s3_session(profile_name)
+    # str(file_path) converts the Path object back to a string, for upload_file which expects a string path
+    # upload_file() efficiently handles multipart uploads for large files
     s3.upload_file(str(file_path), bucket_name, key)
     logger.info(f"Uploaded {file_name} to s3://{bucket_name}/{key}")
 
@@ -45,7 +57,6 @@ def upload_polars_to_s3(df: pl.DataFrame, bucket: str, key: str, profile_name: s
     csv_buffer = StringIO()
 
     # Write df as CSV, to the in-memory buffer, then reset buffer back to 0 (beginning), for upload
-    #
     df.write_csv(csv_buffer)
     csv_buffer.seek(0)
 

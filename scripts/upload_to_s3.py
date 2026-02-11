@@ -3,9 +3,10 @@
 
 import boto3
 import os
+from dotenv import load_dotenv
 
 # S3 bucket name
-S3_BUCKET = "de-october-individual-folders"
+S3_BUCKET = (os.getenv('AWS_BUCKET'))
 
 print("=" * 60)
 print("UPLOADING TO S3")
