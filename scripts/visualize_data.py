@@ -6,12 +6,20 @@ import polars as pl
 import matplotlib.pyplot as plt
 import matplotlib
 import os
+import sys
+from pathlib import Path
+
+# Set UTF-8 encoding for Windows console
+if sys.platform == 'win32':
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # Use a non-GUI backend for matplotlib
 matplotlib.use('Agg')
 
-# Change to project root
-os.chdir(r"c:\Users\jingl\DE 2\project_2_review_jjw")
+# Change to project root using dynamic path
+project_root = Path(__file__).parent.parent
+os.chdir(project_root)
 
 print("=" * 60)
 print("Creating visualizations...")

@@ -4,13 +4,16 @@ View cleaned Parquet data files
 import polars as pl
 import os
 import sys
+from pathlib import Path
 
 # Set UTF-8 encoding for Windows console
 if sys.platform == 'win32':
     import io
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-os.chdir(r"c:\Users\jingl\DE 2\project_2_review_jjw")
+# Use dynamic path relative to script location
+project_root = Path(__file__).parent.parent
+os.chdir(project_root)
 
 print("=" * 60)
 print("Available Parquet Files in data/Cleaned/")
@@ -27,17 +30,29 @@ for file in parquet_files:
         print(f"File: {file}")
         print(f"{'='*60}")
 
-        df = pl.read_parquet(file)
-        print(f"Rows: {len(df):,}")
-        print(f"Columns: {len(df.columns)}")
-        print(f"\nColumn names:\n{df.columns}")
-        print(f"\nFirst 5 rows:")
-        print(df.head(5))
+        try:
+            df = pl.read_parquet(file)
 
-        # Export sample to CSV
-        output = file.replace(".parquet", "_sample.csv").replace("Cleaned", "Cleaned")
-        df.head(100).write_csv(output)
-        print(f"\n✓ Sample exported to: {output}")
+            # Check if file is empty
+            if len(df) == 0:
+                print(f"⚠️  Warning: File exists but contains 0 rows")
+                print(f"   File size: {os.path.getsize(file):,} bytes")
+                continue
+
+            print(f"Rows: {len(df):,}")
+            print(f"Columns: {len(df.columns)}")
+            print(f"\nColumn names:\n{df.columns}")
+            print(f"\nFirst 5 rows:")
+            print(df.head(5))
+
+            # Export sample to CSV
+            output = file.replace(".parquet", "_sample.csv")
+            df.head(100).write_csv(output)
+            print(f"\n✓ Sample exported to: {output}")
+
+        except Exception as e:
+            print(f"✗ Error reading file: {e}")
+            print(f"   File size: {os.path.getsize(file):,} bytes")
     else:
         print(f"\n✗ File not found: {file}")
 
