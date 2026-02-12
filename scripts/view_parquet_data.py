@@ -1,6 +1,9 @@
 """
 View cleaned Parquet data files
 """
+
+#Jing's practice script to read and view cleaned Parquet files, and export a sample to CSV for easier viewing. This is useful for quickly checking the contents of the cleaned data files before further analysis or uploading to S3.
+
 import polars as pl
 import os
 import sys

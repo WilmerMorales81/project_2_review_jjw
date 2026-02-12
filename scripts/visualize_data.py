@@ -2,6 +2,8 @@
 Visualize data from SQL models
 Creates charts and graphs for data exploration
 """
+#Jing's practice script to create visualizations from the census data used in stg_census.sql. This script reads the raw census data, creates several charts (bar chart of counties per state, pie chart of state distribution, and bar chart of CBSA coverage), and saves them as PNG files in a 'visualizations' folder. This is useful for quickly understanding the geographic distribution of counties and their CBSA coverage before further analysis or uploading to S3.
+
 import polars as pl
 import matplotlib.pyplot as plt
 import matplotlib

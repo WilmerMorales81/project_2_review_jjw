@@ -38,7 +38,7 @@ df_clean = df_clean.rename({
     "Entity Type Code": "entity_type",
 })
 
-# Clean ZIP codes (keep only first 5 digits)
+# Clean ZIP codes (keep only first 5 digits) 
 print("\nStep 4: Cleaning ZIP codes...")
 df_clean = df_clean.with_columns(
     pl.col("zip_code").cast(pl.Utf8).str.slice(0, 5).alias("zip_code")
