@@ -1,13 +1,13 @@
--- DuckDB 查询示例
--- 使用 Ctrl+Enter 运行查询
+-- DuckDB Query Examples
+-- Use Ctrl+Enter to run queries in DataGrip or your SQL client
 
--- 1. 查看所有表
+-- 1. Show all available tables
 SHOW TABLES;
 
--- 2. 查看提供商总结
+-- 2. View provider summary
 SELECT * FROM mart_provider_summary;
 
--- 3. 查看前 10 个州（按提供商数量排序）
+-- 3. Top 10 states by provider count
 SELECT
     state,
     total_providers
@@ -15,7 +15,7 @@ FROM mart_providers_by_state
 ORDER BY total_providers DESC
 LIMIT 10;
 
--- 4. 查看特定州的提供商（例如：California）
+-- 4. View providers in a specific state (example: California)
 SELECT
     provider_name,
     provider_type,
@@ -26,7 +26,7 @@ FROM mart_provider_directory
 WHERE state = 'CA'
 LIMIT 20;
 
--- 5. 按专业分类统计提供商数量
+-- 5. Count providers by specialty classification
 SELECT
     specialty_classification,
     COUNT(*) as provider_count
@@ -36,8 +36,8 @@ GROUP BY specialty_classification
 ORDER BY provider_count DESC
 LIMIT 15;
 
--- 6. 查看表结构（选择一个表）
+-- 6. View table structure (select a table)
 DESCRIBE mart_provider_summary;
 
--- 7. 数据概览（快速统计）
+-- 7. Quick data overview with statistics
 SUMMARIZE mart_providers_by_state;
