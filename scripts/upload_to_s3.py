@@ -14,7 +14,7 @@ print("=" * 60)
 
 # Files to upload
 files = {
-    "data/raw/npidata_pfile.csv": "raw/nppes/npidata_pfile.csv",
+    "data/raw/nppes_sample.csv": "raw/nppes/nppes_sample.csv",
     "data/raw/nucc_taxonomy_250.csv": "raw/reference/nucc_taxonomy_250.csv",
     "data/raw/ssa_fips_state_county_2025.csv": "raw/reference/ssa_fips_state_county.csv",
     "data/raw/ZIP_COUNTY_032025.xlsx": "raw/geographic/zip_county.xlsx",

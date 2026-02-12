@@ -7,7 +7,7 @@ print("=" * 60)
 
 # Read raw data
 print("\nStep 1: Reading raw data...")
-df = pl.read_csv("data/raw/npidata_pfile.csv")
+df = pl.read_csv("data/raw/nppes_sample.csv")
 print(f"Original: {len(df):,} rows, {len(df.columns)} columns")
 
 # Select columns needed for your 4 questions

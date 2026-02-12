@@ -2,9 +2,9 @@ from dotenv import load_dotenv
 import boto3
 import os
 import polars as pl
-import my_logger as ml
-import s3_services as s3s
 from src.upload import raw_data_key, cleaned_data_key
+import src.my_logger as ml
+import src.s3_services as s3s
 
 
 def main():

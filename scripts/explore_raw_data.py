@@ -6,7 +6,7 @@ print("Exploring NPPES Raw Data")
 print("=" * 60)
 
 # Read first 1000 rows to explore
-df = pl.read_csv("data/raw/npidata_pfile.csv", n_rows=1000)
+df = pl.read_csv("data/raw/nppes_sample.csv", n_rows=1000)
 
 # 1. How many columns?
 print(f"\nTotal columns: {len(df.columns)}")
