@@ -1,0 +1,12 @@
+{
+  "duckdb.databases": [
+    {
+      "alias": "nnpes",
+      "type": "file",
+      "path": "./nnpes/nnpes.duckdb",
+      "readOnly": false,
+      "attached": true
+    }
+  ],
+  "duckdb.defaultDatabase": "nnpes"
+}

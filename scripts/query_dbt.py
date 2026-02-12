@@ -37,4 +37,4 @@ result = con.execute("""
 print(result)
 
 con.close()
-print("\n✅ Done!")
+print("\n Done!")

@@ -26,9 +26,9 @@ for local, s3_path in files.items():
         print(f"\nUploading: {local}")
         try:
             s3.upload_file(local, S3_BUCKET, s3_path)
-            print(f"  ✅ Uploaded to s3://{S3_BUCKET}/{s3_path}")
+            print(f"   Uploaded to s3://{S3_BUCKET}/{s3_path}")
         except Exception as e:
-            print(f"  ❌ Error: {e}")
+            print(f"   Error: {e}")
     else:
         print(f"\n  File not found: {local}")
 
