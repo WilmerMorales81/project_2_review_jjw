@@ -1,6 +1,9 @@
 """
 View data from SQL files
 """
+
+#Jing's practice script to read and view data from the raw CSV file used in stg_census.sql, and export a sample to CSV for easier viewing. This is useful for quickly checking the contents of the raw data files before cleaning or uploading to S3.
+
 import polars as pl
 import os
 import sys
