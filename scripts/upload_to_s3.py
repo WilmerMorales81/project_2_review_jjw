@@ -1,4 +1,4 @@
-# Upload data files to S3
+# Upload data files to S3，boto 3 is the AWS SDK for Python, which allows you to interact with AWS services like S3. Make sure you have your AWS credentials configured properly (e.g., via environment variables or AWS CLI) before running this script.
 # Run: python scripts/upload_to_s3.py
 
 import boto3
@@ -12,7 +12,7 @@ print("=" * 60)
 print("UPLOADING TO S3")
 print("=" * 60)
 
-# Files to upload
+# Files to upload, raw data files and the ZIP-County mapping file we created, mapping to organized paths in S3 for better structure. Make sure these local files exist before running the script.
 files = {
     "data/raw/npidata_pfile.csv": "raw/nppes/npidata_pfile.csv",
     "data/raw/nucc_taxonomy_250.csv": "raw/reference/nucc_taxonomy_250.csv",

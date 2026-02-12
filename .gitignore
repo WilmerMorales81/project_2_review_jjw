@@ -213,6 +213,11 @@ data/raw/*.zip
 
 # Cleaned data files (DO NOT COMMIT - too large for GitHub)
 data/Cleaned/*.parquet
+data/cleaned/*.csv
+data/cleaned/*.parquet
+
+# Visualizations output
+visualizations/
 
 # dbt-specific files (DO NOT COMMIT)
 target/

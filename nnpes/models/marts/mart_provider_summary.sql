@@ -13,6 +13,7 @@ WITH providers AS (
     FROM {{ ref('stg_nppes_providers') }}
 )
 
+-- The final SELECT statement aggregates the provider data to produce overall summary statistics, including total counts, percentages, and distinct counts for various attributes. This provides a high-level overview of the provider dataset, which can be useful for reporting and analysis purposes.
 SELECT
     COUNT(*) AS total_providers,
     COUNT(CASE WHEN provider_type = 'Individual' THEN 1 END) AS total_individuals,
